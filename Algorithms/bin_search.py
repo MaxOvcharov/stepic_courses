@@ -1,0 +1,61 @@
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+   if first<last:
+       splitpoint = partition(alist,first,last)
+
+       quickSortHelper(alist,first,splitpoint-1)
+       quickSortHelper(alist,splitpoint+1,last)
+
+def partition(alist,first,last):
+   pivotvalue = alist[first]
+   leftmark = first+1
+   rightmark = last
+   done = False
+   while not done:
+
+       while leftmark <= rightmark and \
+               alist[leftmark] <= pivotvalue:
+           leftmark = leftmark + 1
+
+       while alist[rightmark] >= pivotvalue and \
+               rightmark >= leftmark:
+           rightmark = rightmark -1
+
+       if rightmark < leftmark:
+           done = True
+       else:
+           temp = alist[leftmark]
+           alist[leftmark] = alist[rightmark]
+           alist[rightmark] = temp
+
+   temp = alist[first]
+   alist[first] = alist[rightmark]
+   alist[rightmark] = temp
+
+   return rightmark
+
+def binarySearch(alist, num):    
+    first = 0
+    last = len(alist) - 1
+    for i in range(len(alist)):
+        midpoint = (first + last)//2
+        if alist[midpoint] == num:
+            return num
+        else:
+            if num > midpoint:
+                first = midpoint + 1
+            else:
+                last = midpoint - 1
+    return 0
+
+if __name__ == "__main__":    
+    lst = list(map(int, raw_input("Enter your numbers: -> ").split(" ")))
+    quickSort(lst)
+    num = int(raw_input("Enter searching number: -> "))
+    if binarySearch(lst, num):
+        print "Your number %d is in this list" % (num)
+    else:
+        print "Your number %d is't in this list" % (num)
+    
